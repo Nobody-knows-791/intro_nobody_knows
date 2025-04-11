@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Nobody Knows, featuring interactive cyberpunk games and a futuristic design.">
-    <meta name="keywords" content="cyberpunk, portfolio, games, web development, nobody knows">
-    <meta name="author" content="Nobody Knows">
+    <meta name="description" content="Cyberpunk portfolio of Nobody Knows with interactive games.">
     <title>Nobody Knows</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -30,23 +28,9 @@
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
         </div>
-    </button>
-
-    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
-        <div class="theme-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-        </div>
-    </button>
-    
-    <div class="custom-scrollbar">
-        <div class="scroll-thumb" id="scrollThumb"></div>
     </div>
     
     <div class="container">
-        <p class="welcome-text">welcome iam</p>
         <h1 class="main-title glow">NOBODY KNOWS</h1>
         
         <section class="profile-section" aria-labelledby="about-title">
@@ -54,30 +38,6 @@
                 <img src="assets/images/profile.jpg" alt="Cyberpunk avatar of Nobody Knows" class="profile-image">
             </div>
             <h2 class="about-title" id="about-title">ABOUT ME</h2>
-            <button class="check-button" id="checkButton" aria-label="Show details">
-                <span>CHECK IT</span>
-            </button>
-            
-            <div class="about-details" id="aboutDetails">
-                <div class="detail-box" id="box1">
-                    <div class="icon">👤</div>
-                    <h3>NAME</h3>
-                    <p>NOBODY KNOWS</p>
-                    <button class="close-details" id="closeDetails" aria-label="Close details">×</button>
-                </div>
-                
-                <div class="detail-box" id="box2">
-                    <div class="icon">🌎</div>
-                    <h3>COUNTRY, STATE</h3>
-                    <p>INDIA, HARYANA</p>
-                </div>
-                
-                <div class="detail-box" id="box3">
-                    <div class="icon">🎂</div>
-                    <h3>AGE</h3>
-                    <p>18</p>
-                </div>
-            </div>
         </section>
         
         <section class="games-section" aria-labelledby="games-title">
@@ -87,7 +47,6 @@
                     <img src="assets/images/pong.jpg" alt="Pong game thumbnail" class="game-image">
                     <div class="game-content">
                         <h3 class="game-title">Pong Game</h3>
-                        <p class="game-description">A classic two-player game. Control the paddle and outsmart the AI!</p>
                         <button class="play-button" data-game="pong" aria-label="Play Pong">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -96,60 +55,10 @@
                         </button>
                     </div>
                 </div>
-                
-                <div class="game-card">
-                    <img src="assets/images/tictactoe.jpg" alt="Tic Tac Toe thumbnail" class="game-image">
-                    <div class="game-content">
-                        <h3 class="game-title">Tic Tac Toe</h3>
-                        <p class="game-description">X’s and O’s in a neon grid. Can you get three in a row?</p>
-                        <button class="play-button" data-game="tictactoe" aria-label="Play Tic Tac Toe">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            <span>PLAY NOW</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="game-card">
-                    <img src="assets/images/snake.jpg" alt="Snake game thumbnail" class="game-image">
-                    <div class="game-content">
-                        <h3 class="game-title">Snake Game</h3>
-                        <p class="game-description">Guide the neon snake to eat food and grow. Don’t crash!</p>
-                        <button class="play-button" data-game="snake" aria-label="Play Snake">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            <span>PLAY NOW</span>
-                        </button>
-                    </div>
-                </div>
             </div>
-        </section>
-
-        <section class="contact-section" aria-labelledby="contact-title">
-            <h2 class="contact-title" id="contact-title">CONTACT ME</h2>
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
-                </div>
-                <button type="submit" class="check-button" aria-label="Send message">
-                    <span>SEND</span>
-                </button>
-            </form>
         </section>
     </div>
 
-    <!-- Game Modals -->
     <div class="game-modal" id="pongModal">
         <div class="modal-content">
             <button class="close-modal" data-modal="pong" aria-label="Close Pong modal">×</button>
@@ -158,32 +67,6 @@
                 <canvas id="pongCanvas" class="pong-game"></canvas>
                 <div class="score" id="pongScore">0 - 0</div>
             </div>
-            <button class="invite-friend" aria-label="Invite a friend to play Pong">Invite a Friend</button>
-        </div>
-    </div>
-
-    <div class="game-modal" id="tictactoeModal">
-        <div class="modal-content">
-            <button class="close-modal" data-modal="tictactoe" aria-label="Close Tic Tac Toe modal">×</button>
-            <h3 class="modal-title">Tic Tac Toe</h3>
-            <div class="game-container">
-                <div class="tic-tac-toe" id="ticTacToeBoard"></div>
-                <p class="game-status" id="ticTacToeStatus">Player X's Turn</p>
-                <button class="reset-button" id="resetTicTacToe" aria-label="Reset Tic Tac Toe">Reset Game</button>
-            </div>
-            <button class="invite-friend" aria-label="Invite a friend to play Tic Tac Toe">Invite a Friend</button>
-        </div>
-    </div>
-
-    <div class="game-modal" id="snakeModal">
-        <div class="modal-content">
-            <button class="close-modal" data-modal="snake" aria-label="Close Snake modal">×</button>
-            <h3 class="modal-title">Snake Game</h3>
-            <div class="game-container">
-                <canvas id="snakeCanvas" class="snake-game"></canvas>
-                <p class="game-status" id="snakeStatus">Score: 0</p>
-            </div>
-            <button class="invite-friend" aria-label="Invite a friend to play Snake">Invite a Friend</button>
         </div>
     </div>
 
