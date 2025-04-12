@@ -1,0 +1,73 @@
+/* Scroll animations */
+@keyframes smoothScroll {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Box entrance animations */
+  @keyframes boxAppear {
+    0% {
+      opacity: 0;
+      transform: translateY(50px) rotateY(90deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) rotateY(0);
+    }
+  }
+  
+  /* Theme toggle animation */
+  @keyframes themeToggleSpin {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.2);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+  
+  /* Text glow animation */
+  @keyframes textGlow {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(255, 77, 77, 0.7);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(255, 77, 77, 1);
+    }
+  }
+  
+  /* Scrollbar animation */
+  @keyframes scrollbarPulse {
+    0%, 100% {
+      background-color: rgba(255, 77, 77, 0.7);
+    }
+    50% {
+      background-color: rgba(255, 77, 77, 1);
+    }
+  }
+  
+  /* Apply animations */
+  .main-title {
+    animation: textGlow 3s ease-in-out infinite;
+  }
+  
+  .theme-toggle:hover {
+    animation: themeToggleSpin 0.5s ease;
+  }
+  
+  .animate-box {
+    animation: boxAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  
+  .scroll-thumb {
+    animation: scrollbarPulse 2s ease-in-out infinite;
+  }
