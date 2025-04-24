@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOBODY KNOWS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Exo+2:wght@400;700&family=Inter:wght@400;700&family=Audiowide&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div id="loading" class="loading">
+        <canvas id="rope-canvas"></canvas>
+        <p class="loading-text">NOBODY KNOWS</p>
+    </div>
+
+    <!-- 3D Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Scroll Navigation -->
+    <div class="scroll-nav">
+        <div class="scroll-orb"></div>
+    </div>
+
+    <!-- Header Section -->
+    <header id="home">
+        <div class="header-top">
+            <span class="site-name">NOBODY KNOWS</span>
+            <button class="theme-toggle" onclick="toggleTheme()">☾</button>
+        </div>
+        <div class="header-text">
+            <h1>NOBODY KNOWS</h1>
+            <p class="tagline">UNSEEN VIBES</p>
+        </div>
+    </header>
+
+    <!-- Who Am I Section -->
+    <section class="who-am-i" id="about">
+        <h2>WHO AM I</h2>
+        <button class="neon-btn" onclick="showLoading('about-modal')">Discover</button>
+        <div class="spacer"></div>
+        <img src="data:image/jpeg;base64,photo-5" alt="Nobody Knows Photo" class="who-am-i-image">
+        <div class="details-3d">
+            <div class="detail-card">
+                <span class="icon">👤</span>
+                <p class="label">NAME</p>
+                <p>Nobody Knows</p>
+                <p class="custom-text">ᴜɴsᴇᴇɴ ᴠɪʙᴇs [ℵ]</p>
+            </div>
+            <div class="detail-card">
+                <span class="icon">🌍</span>
+                <p class="label">COUNTRY, STATE</p>
+                <p>India, Haryana</p>
+                <p class="custom-text">ɪɴᴅɪᴀɴ ɴᴇᴏɴ</p>
+            </div>
+            <div class="detail-card">
+                <span class="icon">📅</span>
+                <p class="label">AGE</p>
+                <p>18</p>
+                <p class="custom-text">ʏᴏᴜɴɢ ᴠɪsɪᴏɴᴀʀʏ</p>
+            </div>
+        </div>
+        <p class="bio">Hey there! I'm Nobody Knows from India, crafting unseen vibes in the digital cosmos.</p>
+        <a href="https://t.me/Sung_jin_woo_79"><button class="neon-btn">Reach Out</button></a>
+    </section>
+
+    <!-- Shadow Squad Section -->
+    <section class="shadow-squad" id="shadow-squad">
+        <h2>SHADOW SQUAD</h2>
+        <h3>CORE CREW</h3>
+        <a href="https://t.me/SUNG_JIN_WOO_791/23"><button class="neon-btn">Meet All</button></a>
+        <div class="carousel-3d">
+            <div class="member-3d">
+                <img src="data:image/jpeg;base64,photo-2" alt="Nobody Photo">
+                <div class="member-info">
+                    <h4>𓆩Nᴏʙᴏᴅʏ✘⁣Kɴᴏᴡs𓆪</h4>
+                    <p>Leader of the unseen vibes, managing the crew.</p>
+                </div>
+            </div>
+            <div class="member-3d">
+                <img src="data:image/jpeg;base64,PHOTO-3" alt="Chilling Friends Photo">
+                <div class="member-info">
+                    <h4>CHILLING FRIENDS</h4>
+                    <p>My cosmic guild of neon shadows.</p>
+                </div>
+            </div>
+            <div class="member-3d">
+                <a href="https://t.me/Unseenlines">
+                    <img src="data:image/jpeg;base64,photo-9" alt="Soul Photo">
+                </a>
+                <div class="member-info">
+                    <h4>꧁("soul")꧂</h4>
+                    <p>Spreading unseen vibes in the digital void.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Creations Section -->
+    <section class="my-creations" id="creations">
+        <h2>MY CREATIONS</h2>
+        <h3>RECENT WORKS</h3>
+        <div class="tabs">
+            <button class="tab active" onclick="filterCreations('all')">ALL</button>
+            <button class="tab" onclick="showLoading('channel-modal')">Channel</button>
+            <button class="tab" onclick="showLoading('group-modal')">Group</button>
+            <button class="tab" onclick="showLoading('bot-modal')">Bot</button>
+        </div>
+        <div class="creations-grid">
+            <div class="creation" data-category="all channel">
+                <div class="creation-card">
+                    <img src="data:image/jpeg;base64,PHOTO-7" alt="Neon Legacy Channel">
+                    <p>Neon Legacy Channel</p>
+                    <a href="https://t.me/chilling_friends_support"><button class="neon-btn">Join Channel</button></a>
+                </div>
+            </div>
+            <div class="creation" data-category="all group">
+                <div class="creation-card">
+                    <img src="data:image/jpeg;base64,PHOTO-3" alt="Cosmic Crew Group">
+                    <p>Cosmic Crew Group</p>
+                    <a href="https://t.me/+s4LqOJ1K5_s2NDc1"><button class="neon-btn">Join Group</button></a>
+                </div>
+            </div>
+            <div class="creation" data-category="all bot">
+                <div class="creation-card">
+                    <img src="data:image/jpeg;base64,PHOTO-4" alt="Neon Bot">
+                    <p>Neon Bot</p>
+                    <button class="neon-btn" onclick="showLoading('bot-list-modal')">Use Bot</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vibe Packs Section -->
+    <section class="vibe-packs">
+        <h2>VIBE PACKS</h2>
+        <div class="vibe-grid">
+            <div class="vibe">
+                <div class="vibe-card">
+                    <p>Neon Stickers</p>
+                    <img src="data:image/jpeg;base64,PHOTO-1" alt="Sticker Pack">
+                    <a href="https://t.me/stickers_791"><button class="neon-btn">Join</button></a>
+                </div>
+            </div>
+            <div class="vibe">
+                <div class="vibe-card">
+                    <p>Waifu Town</p>
+                    <img src="data:image/jpeg;base64,photo-8" alt="Waifu Town">
+                    <a href="https://t.me/TOWN_OF_PEACE_791"><button class="neon-btn">Join</button></a>
+                </div>
+            </div>
+            <div class="vibe">
+                <div class="vibe-card">
+                    <p>Music Universe</p>
+                    <img src="data:image/jpeg;base64,photo-10" alt="Music Universe">
+                    <a href="https://t.me/music_lover_791"><button class="neon-btn">Join</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anime Cosmos Section -->
+    <section class="anime-cosmos">
+        <h2>JOIN THE COSMOS</h2>
+        <h3>ANIME COSMOS</h3>
+        <p>Movies | Web Series | Anime Hub</p>
+        <div class="cosmos-content">
+            <a href="https://t.me/TOP_RATED_ANIME_UPLOADER_791">
+                <div class="cosmos-sphere">
+                    <img src="data:image/jpeg;base64,PHOTO-6" alt="Anime Hub Image">
+                </div>
+            </a>
+            <a href="https://t.me/TOP_RATED_ANIME_UPLOADER_791"><button class="neon-btn">Join Anime Cosmos</button></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h3>NOBODY KNOWS</h3>
+        <div class="footer-links">
+            <a href="#home" onclick="scrollToSection('home')">Home</a>
+            <a href="#about" onclick="scrollToSection('about')">About</a>
+            <a href="#creations" onclick="scrollToSection('creations')">Creations</a>
+            <a href="#shadow-squad" onclick="scrollToSection('shadow-squad')">Squad</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/nobody_knows_792?igsh=MTFmY3FjcWgwOXRuNg=="><svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.326 2.633-1.301 3.608-.975.975-2.242 1.24-3.608 1.301-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.326-3.608-1.301-.975-.975-1.24-2.242-1.301-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.326-2.633 1.301-3.608.975-.975 2.242-1.24 3.608-1.301 1.266-.058 1.646-.07 4.85-.07m0-2.163c-3.259 0-3.667.014-4.947.072-1.453.066-2.898.357-4.085 1.544C1.781 2.803 1.49 4.248 1.424 5.701c-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.066 1.453.357 2.898 1.544 4.085 1.187 1.187 2.632 1.478 4.085 1.544 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.453-.066 2.898-.357 4.085-1.544 1.187-1.187 1.478-2.632 1.544-4.085.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.066-1.453-.357-2.898-1.544-4.085-1.187-1.187-2.632-1.478-4.085-1.544-1.28-.058-1.688-.072-4.947-.072z"></path></svg></a>
+            <a href="https://t.me/Sung_jin_woo_79"><svg class="social-icon" viewBox="0 0 24 24"><path d="M11.994 2c5.523 0 10 4.477 10 10s-4.477 10-10 10-10-4.477-10-10 4.477-10 10-10zm3.707 12.189l-1.472-4.696 5.647-5.113-6.97-.016 4.398 6.434-1.603 3.391zm-8.968-2.807l1.403 2.081.906-2.079 2.288-1.054-3.696-1.054zm4.263-2.916l1.403 2.081 2.288-1.054-1.403-2.081-2.288 1.054z"></path></svg></a>
+            <a href="contact.html"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg></a>
+        </div>
+        <p>© 2025 BY NOBODY KNOWS. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#home" onclick="scrollToTop()" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2l-10 10h6v10h8v-10h6z"></path></svg></a>
+        <a href="#about" onclick="scrollToSection('about')" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg></a>
+        <a href="#creations" onclick="scrollToSection('creations')" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 2h-16c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-16c0-1.1-.9-2-2-2zm-2 16h-12v-12h12v12z"></path></svg></a>
+        <a href="contact.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 3h-18v18h18v-18zm-2 16h-14v-14h14v14zm-4-8h-6v-2h6v2zm0 4h-6v-2h6v2z"></path></svg></a>
+    </nav>
+
+    <!-- Modals -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content about-modal-content">
+            <span class="close" onclick="closeModal('about-modal')">×</span>
+            <video class="modal-video" autoplay loop muted>
+                <source src="data:video/mp4;base64,VIDEO-1" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="intro-details">
+                <div class="intro-item">
+                    <span class="intro-label">Name:</span>
+                    <span class="intro-value">Nobody Knows</span>
+                </div>
+                <div class="intro-item">
+                    <span class="intro-label">Age:</span>
+                    <span class="intro-value">18</span>
+                </div>
+                <div class="intro-item">
+                    <span class="intro-label">Country:</span>
+                    <span class="intro-value">India</span>
+                </div>
+                <div class="intro-item">
+                    <span class="intro-label">Hobbies:</span>
+                    <span class="intro-value">Gaming, Music</span>
+                </div>
+                <div class="intro-item">
+                    <span class="intro-label">Study:</span>
+                    <span class="intro-value">Why ask?</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="channel-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('channel-modal')">×</span>
+            <h2>Neon Legacy Channels</h2>
+            <p>Join the cosmic channels for unseen updates!</p>
+            <div class="modal-image-container">
+                <img src="data:image/jpeg;base64,PHOTO-7" alt="Channel Image">
+            </div>
+            <a href="https://t.me/chilling_friends_support"><button class="neon-btn">Join Us</button></a>
+        </div>
+    </div>
+
+    <div id="group-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('group-modal')">×</span>
+            <h2>Cosmic Crew Groups</h2>
+            <p>Connect with the unseen in our Telegram groups!</p>
+            <div class="modal-image-container">
+                <img src="data:image/jpeg;base64,PHOTO-3" alt="Group Image">
+            </div>
+            <a href="https://t.me/+s4LqOJ1K5_s2NDc1"><button class="neon-btn">Join Us</button></a>
+        </div>
+    </div>
+
+    <div id="bot-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('bot-modal')">×</span>
+            <h2>Neon Bots</h2>
+            <p>Interact with my cosmic bots!</p>
+            <div class="modal-image-container">
+                <img src="data:image/jpeg;base64,PHOTO-4" alt="Bot Image">
+            </div>
+            <button class="neon-btn" onclick="showLoading('bot-list-modal')">Use Bot</button>
+        </div>
+    </div>
+
+    <div id="bot-list-modal" class="modal">
+        <div class="modal-content bot-grid">
+            <span class="close" onclick="closeModal('bot-list-modal')">×</span>
+            <h2>Bot Cosmos</h2>
+            <div class="bot-card">
+                <img src="data:image/jpeg;base64,PHOTO-4" alt="Madara Chat Bot">
+                <h4>Madara Chat Bot</h4>
+                <p>Your cosmic companion for epic chats!</p>
+                <a href="https://t.me/Madara7_chat_bot"><button class="neon-btn">Check</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
