@@ -23,6 +23,19 @@ function toggleTheme() {
     document.body.classList.toggle('light-theme');
     const themeIcon = document.querySelector('.theme-icon');
     themeIcon.innerHTML = document.body.classList.contains('light-theme') ? '<path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8z"/>' : '<path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8zm0-14a6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6 6 6 0 0 0-6-6z"/>';
+    updateScrollTorchColor();
+}
+
+// Update Scroll Torch Color Based on Theme
+function updateScrollTorchColor() {
+    const scrollTorch = document.querySelector('.scroll-torch');
+    if (document.body.classList.contains('light-theme')) {
+        scrollTorch.style.background = 'linear-gradient(to top, #EDE4D3, #1E90FF)';
+        scrollTorch.style.borderColor = '#333333';
+    } else {
+        scrollTorch.style.background = 'linear-gradient(to top, #333333, #1E90FF)';
+        scrollTorch.style.borderColor = '#EDE4D3';
+    }
 }
 
 // Modal Functions
@@ -61,17 +74,18 @@ function scrollToTop() {
 }
 
 // Scroll Navigation Marker
-const scrollMarker = document.querySelector('.scroll-marker');
+const scrollTorch = document.querySelector('.scroll-torch');
 window.addEventListener('scroll', () => {
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    const markerRange = 200 - 16;
+    const torchRange = 200 - 30;
     const scrollFraction = scrollPosition / (documentHeight - windowHeight);
-    scrollMarker.style.transform = `translateY(${scrollFraction * markerRange}px)`;
+    scrollTorch.style.transform = `translateY(${scrollFraction * torchRange}px)`;
+    updateScrollTorchColor();
 });
 
-scrollMarker.addEventListener('click', () => {
+scrollTorch.addEventListener('click', () => {
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
@@ -91,4 +105,9 @@ window.addEventListener('scroll', () => {
             section.classList.add('visible');
         }
     });
+    const bottomNav = document.querySelector('.bottom-nav');
+    bottomNav.style.transform = `translateX(-50%) translateY(${window.scrollY * 0.1}px)`;
 });
+
+// Initial Color Setup
+updateScrollTorchColor();

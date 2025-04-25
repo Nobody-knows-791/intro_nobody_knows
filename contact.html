@@ -11,14 +11,16 @@
             max-width: 600px;
             margin: 50px auto;
             text-align: center;
+            display: block; /* Ensure it shows */
         }
         .contact-section form {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150" fill="#2E3A3B"><rect x="5" y="5" width="90" height="140" rx="5"/></svg>') no-repeat center;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150" fill="#1C2526"><rect x="5" y="5" width="90" height="140" rx="5"/></svg>') no-repeat center;
             background-size: cover;
             padding: 30px;
-            border: 1px solid #D4A017;
+            border: 1px solid #333333;
             border-radius: 10px;
-            box-shadow: 0 0 10px #8B0000;
+            box-shadow: 0 0 10px #1E90FF;
+            display: block; /* Ensure form is visible */
         }
         .form-group {
             margin-bottom: 20px;
@@ -27,15 +29,15 @@
         .form-group label {
             display: block;
             font-family: 'Uncial Antiqua', cursive;
-            color: #D4A017;
+            color: #1E90FF;
             margin-bottom: 5px;
         }
         .form-group input,
         .form-group textarea {
             width: 100%;
             padding: 10px;
-            background: #1C2526;
-            border: 1px solid #D4A017;
+            background: #000000;
+            border: 1px solid #333333;
             border-radius: 5px;
             color: #EDE4D3;
             font-family: 'Lora', serif;
@@ -47,12 +49,16 @@
         .contact-section button {
             margin: 10px 0;
         }
+        .error-message {
+            color: #1E90FF;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <!-- Background -->
-    <div class="smoke-bg"></div>
-    <div class="stars-bg"></div>
+    <div class="glossy-bg"></div>
 
     <!-- Contact Section -->
     <section class="contact-section">
@@ -72,19 +78,29 @@
             </div>
             <button type="submit" class="gothic-btn">Send</button>
         </form>
+        <p class="error-message">Please configure Telegram Bot Token and Chat ID in the script to enable sending. Redirecting to home...</p>
         <a href="index.html"><button class="gothic-btn">Back to Home</button></a>
     </section>
 
     <script>
-        // Form Submission to Telegram
+        // Form Submission to Telegram with Fallback
         document.getElementById('contact-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
+            const errorMessage = document.querySelector('.error-message');
             const telegramBotToken = '7012929916:AAH1Y87yM9xHPWLm09bcER9XSib0lGHQCIY'; // Replace with your Telegram Bot Token
-            const chatId = '7594760731'; // Replace with your Telegram Chat ID
+            const chatId = '-1002063963254'; // Replace with your Telegram Chat ID
             const text = `New Contact Form Submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
+
+            if (!telegramBotToken || !chatId || telegramBotToken === 'YOUR_BOT_TOKEN' || chatId === 'YOUR_CHAT_ID') {
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
 
             try {
                 const response = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
@@ -96,10 +112,16 @@
                     alert('Message sent! Redirecting to home...');
                     window.location.href = 'index.html';
                 } else {
-                    alert('Error sending message. Please try again.');
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
                 }
             } catch (error) {
-                alert('Error sending message. Please try again.');
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
             }
         });
     </script>
