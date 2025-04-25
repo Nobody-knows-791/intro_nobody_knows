@@ -23,19 +23,6 @@ function toggleTheme() {
     document.body.classList.toggle('light-theme');
     const themeIcon = document.querySelector('.theme-icon');
     themeIcon.innerHTML = document.body.classList.contains('light-theme') ? '<path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8z"/>' : '<path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8zm0-14a6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6 6 6 0 0 0-6-6z"/>';
-    updateScrollTorchColor();
-}
-
-// Update Scroll Torch Color Based on Theme
-function updateScrollTorchColor() {
-    const scrollTorch = document.querySelector('.scroll-torch');
-    if (document.body.classList.contains('light-theme')) {
-        scrollTorch.style.background = 'linear-gradient(to top, #EDE4D3, #1E90FF)';
-        scrollTorch.style.borderColor = '#333333';
-    } else {
-        scrollTorch.style.background = 'linear-gradient(to top, #333333, #1E90FF)';
-        scrollTorch.style.borderColor = '#EDE4D3';
-    }
 }
 
 // Modal Functions
@@ -73,27 +60,41 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Scroll Navigation Marker
-const scrollTorch = document.querySelector('.scroll-torch');
+// Draggable Scroll Bar
+const scrollNav = document.querySelector('.scroll-nav');
+const scrollBar = document.querySelector('.scroll-bar');
+let isDragging = false;
+
+scrollBar.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    scrollBar.style.background = '#666666';
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const rect = scrollNav.getBoundingClientRect();
+    const y = e.clientY - rect.top - (scrollBar.offsetHeight / 2);
+    const maxY = rect.height - scrollBar.offsetHeight;
+    const scrollFraction = Math.max(0, Math.min(1, y / maxY));
+    const scrollPosition = scrollFraction * (document.documentElement.scrollHeight - window.innerHeight);
+    window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+    scrollBar.style.top = `${y}px`;
+});
+
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        scrollBar.style.background = '#1A1A1A';
+    }
+});
+
 window.addEventListener('scroll', () => {
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    const torchRange = 200 - 30;
     const scrollFraction = scrollPosition / (documentHeight - windowHeight);
-    scrollTorch.style.transform = `translateY(${scrollFraction * torchRange}px)`;
-    updateScrollTorchColor();
-});
-
-scrollTorch.addEventListener('click', () => {
-    const scrollPosition = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    if (scrollPosition > 100) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (scrollPosition + windowHeight < documentHeight - 100) {
-        window.scrollTo({ top: documentHeight, behavior: 'smooth' });
-    }
+    const maxY = scrollNav.offsetHeight - scrollBar.offsetHeight;
+    scrollBar.style.top = `${scrollFraction * maxY}px`;
 });
 
 // Fade-In on Scroll
@@ -108,6 +109,3 @@ window.addEventListener('scroll', () => {
     const bottomNav = document.querySelector('.bottom-nav');
     bottomNav.style.transform = `translateX(-50%) translateY(${window.scrollY * 0.1}px)`;
 });
-
-// Initial Color Setup
-updateScrollTorchColor();
