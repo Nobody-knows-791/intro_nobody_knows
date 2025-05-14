@@ -19,11 +19,22 @@ function showLoading(modalId) {
 }
 
 // Theme Toggle
-function toggleTheme() {
-    document.body.classList.toggle('light-theme');
-    const themeIcon = document.querySelector('.theme-icon');
-    themeIcon.innerHTML = document.body.classList.contains('light-theme') ? '<path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8z"/>' : '<path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1-8-8 8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8zm0-14a6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6 6 6 0 0 0-6-6z"/>';
+function toggleThemeMenu() {
+    const themeMenu = document.getElementById('theme-menu');
+    themeMenu.classList.toggle('active');
 }
+
+function setTheme(theme) {
+    const body = document.body;
+    body.classList.remove('bright-theme', 'dark-theme', 'system-theme');
+    body.classList.add(`${theme}-theme`);
+    localStorage.setItem('theme', theme);
+    document.getElementById('theme-menu').classList.remove('active');
+}
+
+// Apply saved theme or default to dark
+const savedTheme = localStorage.getItem('theme') || 'dark';
+setTheme(savedTheme);
 
 // Modal Functions
 function closeModal(modalId) {
@@ -53,49 +64,35 @@ function filterCreations(category) {
 // Scroll to Section
 function scrollToSection(sectionId) {
     document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    updateActiveNav();
 }
 
 // Scroll to Top
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateActiveNav();
 }
 
-// Draggable Scroll Bar
-const scrollNav = document.querySelector('.scroll-nav');
-const scrollBar = document.querySelector('.scroll-bar');
-let isDragging = false;
+// Update Active Navigation Item
+function updateActiveNav() {
+    const navItems = document.querySelectorAll('.vertical-nav .nav-item');
+    const sections = ['home', 'about', 'creations', 'shadow-squad'];
+    let currentSection = 'home';
 
-scrollBar.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    scrollBar.style.background = '#666666';
-});
+    sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element && window.scrollY >= element.offsetTop - 100) {
+            currentSection = section;
+        }
+    });
 
-document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    const rect = scrollNav.getBoundingClientRect();
-    const y = e.clientY - rect.top - (scrollBar.offsetHeight / 2);
-    const maxY = rect.height - scrollBar.offsetHeight;
-    const scrollFraction = Math.max(0, Math.min(1, y / maxY));
-    const scrollPosition = scrollFraction * (document.documentElement.scrollHeight - window.innerHeight);
-    window.scrollTo({ top: scrollPosition, behavior: 'auto' });
-    scrollBar.style.top = `${y}px`;
-});
-
-document.addEventListener('mouseup', () => {
-    if (isDragging) {
-        isDragging = false;
-        scrollBar.style.background = '#1A1A1A';
-    }
-});
-
-window.addEventListener('scroll', () => {
-    const scrollPosition = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollFraction = scrollPosition / (documentHeight - windowHeight);
-    const maxY = scrollNav.offsetHeight - scrollBar.offsetHeight;
-    scrollBar.style.top = `${scrollFraction * maxY}px`;
-});
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === `#${currentSection}`) {
+            item.classList.add('active');
+        }
+    });
+}
 
 // Fade-In on Scroll
 const sections = document.querySelectorAll('section');
@@ -108,4 +105,5 @@ window.addEventListener('scroll', () => {
     });
     const bottomNav = document.querySelector('.bottom-nav');
     bottomNav.style.transform = `translateX(-50%) translateY(${window.scrollY * 0.1}px)`;
+    updateActiveNav();
 });
