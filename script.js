@@ -19,22 +19,33 @@ function showLoading(modalId) {
 }
 
 // Theme Toggle
-function toggleThemeMenu() {
-    const themeMenu = document.getElementById('theme-menu');
-    themeMenu.classList.toggle('active');
-}
-
 function setTheme(theme) {
     const body = document.body;
     body.classList.remove('bright-theme', 'dark-theme', 'system-theme');
-    body.classList.add(`${theme}-theme`);
-    localStorage.setItem('theme', theme);
-    document.getElementById('theme-menu').classList.remove('active');
+    
+    if (theme === 'system') {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        body.classList.add(prefersDark ? 'dark-theme' : 'bright-theme');
+    } else {
+        body.classList.add(`${theme}-theme`);
+    }
+    
+    document.querySelector('.theme-toggle').classList.remove('active');
 }
 
-// Apply saved theme or default to dark
-const savedTheme = localStorage.getItem('theme') || 'dark';
-setTheme(savedTheme);
+// Toggle Theme Menu
+document.querySelector('.theme-toggle').addEventListener('click', () => {
+    const toggle = document.querySelector('.theme-toggle');
+    toggle.classList.toggle('active');
+});
+
+// Close theme menu when clicking outside
+document.addEventListener('click', (e) => {
+    const toggle = document.querySelector('.theme-toggle');
+    if (!toggle.contains(e.target)) {
+        toggle.classList.remove('active');
+    }
+});
 
 // Modal Functions
 function closeModal(modalId) {
@@ -64,35 +75,49 @@ function filterCreations(category) {
 // Scroll to Section
 function scrollToSection(sectionId) {
     document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-    updateActiveNav();
 }
 
 // Scroll to Top
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    updateActiveNav();
 }
 
-// Update Active Navigation Item
-function updateActiveNav() {
-    const navItems = document.querySelectorAll('.vertical-nav .nav-item');
-    const sections = ['home', 'about', 'creations', 'shadow-squad'];
-    let currentSection = 'home';
+// Draggable Scroll Bar
+const scrollNav = document.querySelector('.scroll-nav');
+const scrollBar = document.querySelector('.scroll-bar');
+let isDragging = false;
 
-    sections.forEach(section => {
-        const element = document.getElementById(section);
-        if (element && window.scrollY >= element.offsetTop - 100) {
-            currentSection = section;
-        }
-    });
+scrollBar.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    scrollBar.style.background = 'linear-gradient(180deg, #999999, #CCCCCC)';
+});
 
-    navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href') === `#${currentSection}`) {
-            item.classList.add('active');
-        }
-    });
-}
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const rect = scrollNav.getBoundingClientRect();
+    const y = e.clientY - rect.top - (scrollBar.offsetHeight / 2);
+    const maxY = rect.height - scrollBar.offsetHeight;
+    const scrollFraction = Maththe scrollFraction * Math.max(0, Math.min(1, y / maxY));
+    const scrollPosition = scrollFraction * (document.documentElement.scrollHeight - window.innerHeight);
+    window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+    scrollBar.style.top = `${y}px`;
+});
+
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        scrollBar.style.background = 'linear-gradient(180deg, #666666, #999999)';
+    }
+});
+
+window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollFraction = scrollPosition / (documentHeight - windowHeight);
+    const maxY = scrollNav.offsetHeight - scrollBar.offsetHeight;
+    scrollBar.style.top = `${scrollFraction * maxY}px`;
+});
 
 // Fade-In on Scroll
 const sections = document.querySelectorAll('section');
@@ -105,5 +130,37 @@ window.addEventListener('scroll', () => {
     });
     const bottomNav = document.querySelector('.bottom-nav');
     bottomNav.style.transform = `translateX(-50%) translateY(${window.scrollY * 0.1}px)`;
-    updateActiveNav();
+});
+
+// Contact Form Submission
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const errorMessage = document.getElementById('contact-error');
+    const telegramBotToken = '7012929916:AAH1Y87yM9xHPWLm09bcER9XSib0lGHQCIY';
+    const chatId = '-1002063963254';
+    const text = `New Contact Form Submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
+
+    errorMessage.style.display = 'none';
+
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text })
+        });
+        if (response.ok) {
+            alert('Message sent successfully!');
+            closeModal('contact-modal');
+            document.getElementById('contact-form').reset();
+        } else {
+            errorMessage.textContent = 'Failed to send message. Please try again.';
+            errorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        errorMessage.textContent = 'An error occurred. Please try again later.';
+        errorMessage.style.display = 'block';
+    }
 });
