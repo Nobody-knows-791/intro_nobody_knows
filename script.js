@@ -3,6 +3,7 @@ window.onload = function() {
     setTimeout(() => {
         document.getElementById('loading').style.display = 'none';
     }, 3000);
+    applyStoredTheme();
 };
 
 function showLoading(modalId) {
@@ -19,33 +20,28 @@ function showLoading(modalId) {
 }
 
 // Theme Toggle
+function toggleThemeMenu() {
+    const menu = document.getElementById('theme-menu');
+    menu.classList.toggle('active');
+}
+
 function setTheme(theme) {
     const body = document.body;
-    body.classList.remove('bright-theme', 'dark-theme', 'system-theme');
-    
+    body.classList.remove('bright-theme', 'dark-theme');
     if (theme === 'system') {
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         body.classList.add(prefersDark ? 'dark-theme' : 'bright-theme');
     } else {
         body.classList.add(`${theme}-theme`);
     }
-    
-    document.querySelector('.theme-toggle').classList.remove('active');
+    localStorage.setItem('theme', theme);
+    document.getElementById('theme-menu').classList.remove('active');
 }
 
-// Toggle Theme Menu
-document.querySelector('.theme-toggle').addEventListener('click', () => {
-    const toggle = document.querySelector('.theme-toggle');
-    toggle.classList.toggle('active');
-});
-
-// Close theme menu when clicking outside
-document.addEventListener('click', (e) => {
-    const toggle = document.querySelector('.theme-toggle');
-    if (!toggle.contains(e.target)) {
-        toggle.classList.remove('active');
-    }
-});
+function applyStoredTheme() {
+    const storedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(storedTheme);
+}
 
 // Modal Functions
 function closeModal(modalId) {
@@ -89,7 +85,7 @@ let isDragging = false;
 
 scrollBar.addEventListener('mousedown', (e) => {
     isDragging = true;
-    scrollBar.style.background = 'linear-gradient(180deg, #999999, #CCCCCC)';
+    scrollBar.style.background = 'linear-gradient(180deg, #999999, #666666)';
 });
 
 document.addEventListener('mousemove', (e) => {
@@ -97,7 +93,7 @@ document.addEventListener('mousemove', (e) => {
     const rect = scrollNav.getBoundingClientRect();
     const y = e.clientY - rect.top - (scrollBar.offsetHeight / 2);
     const maxY = rect.height - scrollBar.offsetHeight;
-    const scrollFraction = Maththe scrollFraction * Math.max(0, Math.min(1, y / maxY));
+    const scrollFraction = Math.max(0, Math.min(1, y / maxY));
     const scrollPosition = scrollFraction * (document.documentElement.scrollHeight - window.innerHeight);
     window.scrollTo({ top: scrollPosition, behavior: 'auto' });
     scrollBar.style.top = `${y}px`;
@@ -106,7 +102,7 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
     if (isDragging) {
         isDragging = false;
-        scrollBar.style.background = 'linear-gradient(180deg, #666666, #999999)';
+        scrollBar.style.background = 'linear-gradient(180deg, #666666, #333333)';
     }
 });
 
