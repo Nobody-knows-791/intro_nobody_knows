@@ -22,7 +22,9 @@ function showLoading(modalId) {
 // Theme Toggle
 function toggleThemeMenu() {
     const menu = document.getElementById('theme-menu');
+    const icon = document.querySelector('.theme-icon');
     menu.classList.toggle('active');
+    icon.classList.toggle('rotate');
 }
 
 function setTheme(theme) {
@@ -36,6 +38,7 @@ function setTheme(theme) {
     }
     localStorage.setItem('theme', theme);
     document.getElementById('theme-menu').classList.remove('active');
+    document.querySelector('.theme-icon').classList.remove('rotate');
 }
 
 function applyStoredTheme() {
@@ -85,15 +88,17 @@ let isDragging = false;
 
 scrollBar.addEventListener('mousedown', (e) => {
     isDragging = true;
-    scrollBar.style.background = 'linear-gradient(180deg, #999999, #666666)';
+    scrollBar.style.transform = 'scale(1.1)';
+    e.preventDefault();
 });
 
 document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     const rect = scrollNav.getBoundingClientRect();
-    const y = e.clientY - rect.top - (scrollBar.offsetHeight / 2);
+    let y = e.clientY - rect.top - (scrollBar.offsetHeight / 2);
     const maxY = rect.height - scrollBar.offsetHeight;
-    const scrollFraction = Math.max(0, Math.min(1, y / maxY));
+    y = Math.max(0, Math.min(maxY, y));
+    const scrollFraction = y / maxY;
     const scrollPosition = scrollFraction * (document.documentElement.scrollHeight - window.innerHeight);
     window.scrollTo({ top: scrollPosition, behavior: 'auto' });
     scrollBar.style.top = `${y}px`;
@@ -102,11 +107,12 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
     if (isDragging) {
         isDragging = false;
-        scrollBar.style.background = 'linear-gradient(180deg, #666666, #333333)';
+        scrollBar.style.transform = 'scale(1)';
     }
 });
 
 window.addEventListener('scroll', () => {
+    if (isDragging) return;
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
