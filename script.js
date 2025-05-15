@@ -148,8 +148,8 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     const errorMessage = document.getElementById('contact-error');
-    const telegramBotToken = 'YOUR_TELEGRAM_BOT_TOKEN'; // Replace with your valid bot token
-    const chatId = 'YOUR_CHAT_ID'; // Replace with your valid chat ID
+    const telegramBotToken = '7433197315:AAFFMezqvRFGgWtwk5AMkoFrjpnShG3q8Bw'; // Replace with your valid bot token
+    const chatId = '-1002273852179'; // Replace with your valid chat ID
     const text = `New Contact Form Submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
 
     errorMessage.style.display = 'none';
