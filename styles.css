@@ -648,16 +648,17 @@ footer h3 {
 }
 
 .social-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    border: 1px solid var(--btn-border);
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    clip-path: path('M8 0H24C28.4183 0 32 3.58172 32 8V24C32 28.4183 28.4183 32 24 32H8C3.58172 32 0 28.4183 0 24V8C0 3.58172 3.58172 0 8 0Z');
     transition: transform 0.3s ease;
-    filter: grayscale(100%) brightness(100%);
+    border: 1px solid var(--btn-border);
+    filter: brightness(100%);
 }
 
 body.bright-theme .social-icon {
-    filter: grayscale(100%) brightness(0%);
+    filter: brightness(90%);
 }
 
 .social-icon:hover {
@@ -701,11 +702,12 @@ body.bright-theme .bottom-nav {
 }
 
 .nav-icon {
-    width: 26px;
-    height: 26px;
-    border-radius: 8px;
-    border: 1px solid var(--btn-border);
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    clip-path: path('M6 0H22C26.4183 0 28 3.58172 28 8V20C28 24.4183 26.4183 28 22 28H6C3.58172 28 0 24.4183 0 20V8C0 3.58172 3.58172 0 6 0Z');
     transition: transform 0.3s ease;
+    border: 1px solid var(--btn-border);
     filter: grayscale(100%) brightness(100%);
 }
 
@@ -781,25 +783,13 @@ body.bright-theme .modal {
 
 .close {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 2.5rem;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
     color: var(--text-color);
     cursor: pointer;
     text-shadow: 0 0 3px var(--btn-border);
-    background: rgba(26, 26, 26, 0.7);
-    padding: 5px;
-    border-radius: 50%;
     z-index: 3;
-    transition: background 0.3s ease;
-}
-
-body.bright-theme .close {
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.close:hover {
-    background: var(--btn-hover-bg);
 }
 
 /* About Modal */
