@@ -9,7 +9,7 @@ window.onload = function() {
 function showLoading(modalId) {
     const loading = document.getElementById('loading');
     if (modalId === 'shadow-squad') {
-        document.getElementById(modalId).style.display = 'block';
+        document.getElementById(modalId).style.display = 'flex';
         return;
     }
     loading.style.display = 'flex';
@@ -29,12 +29,15 @@ function toggleThemeMenu() {
 
 function setTheme(theme) {
     const body = document.body;
+    const themeIcon = document.querySelector('.theme-icon');
     body.classList.remove('bright-theme', 'dark-theme');
     if (theme === 'system') {
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         body.classList.add(prefersDark ? 'dark-theme' : 'bright-theme');
+        themeIcon.src = prefersDark ? 'https://cdn-icons-png.flaticon.com/512/547/547433.png' : 'https://cdn-icons-png.flaticon.com/512/1163/1163624.png';
     } else {
         body.classList.add(`${theme}-theme`);
+        themeIcon.src = theme === 'dark' ? 'https://cdn-icons-png.flaticon.com/512/547/547433.png' : 'https://cdn-icons-png.flaticon.com/512/1163/1163624.png';
     }
     localStorage.setItem('theme', theme);
     document.getElementById('theme-menu').classList.remove('active');
@@ -141,8 +144,8 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     const errorMessage = document.getElementById('contact-error');
-    const telegramBotToken = '7012929916:AAH1Y87yM9xHPWLm09bcER9XSib0lGHQCIY';
-    const chatId = '-1002063963254';
+    const telegramBotToken = '7433197315:AAFFMezqvRFGgWtwk5AMkoFrjpnShG3q8Bw'; // Replace with your valid bot token
+    const chatId = '-1002273852179'; // Replace with your valid chat ID
     const text = `New Contact Form Submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
 
     errorMessage.style.display = 'none';
@@ -153,15 +156,18 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ chat_id: chatId, text })
         });
-        if (response.ok) {
+        const result = await response.json();
+        if (result.ok) {
             alert('Message sent successfully!');
             closeModal('contact-modal');
             document.getElementById('contact-form').reset();
         } else {
-            errorMessage.textContent = 'Failed to send message. Please try again.';
+            console.error('Telegram API error:', result);
+            errorMessage.textContent = 'Failed to send message. Please check bot settings.';
             errorMessage.style.display = 'block';
         }
     } catch (error) {
+        console.error('Fetch error:', error);
         errorMessage.textContent = 'An error occurred. Please try again later.';
         errorMessage.style.display = 'block';
     }
