@@ -1,5 +1,10 @@
 // Loading Animation
 window.onload = function() {
+    // Hide all modals on page load
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+    // Show loading animation for 3 seconds
     setTimeout(() => {
         document.getElementById('loading').style.display = 'none';
     }, 3000);
@@ -8,10 +13,12 @@ window.onload = function() {
 
 function showLoading(modalId) {
     const loading = document.getElementById('loading');
+    // Special case for shadow-squad (no loading animation needed)
     if (modalId === 'shadow-squad') {
         document.getElementById(modalId).style.display = 'flex';
         return;
     }
+    // Show loading animation before opening modal
     loading.style.display = 'flex';
     setTimeout(() => {
         loading.style.display = 'none';
@@ -54,8 +61,19 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.style.display = 'none';
+        console.log(`Closed modal: ${modalId}`); // Debug log
     }
 }
+
+// Close modal when clicking outside content
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            console.log(`Closed modal by clicking outside: ${modal.id}`); // Debug log
+        }
+    });
+});
 
 // Creations Filter
 function filterCreations(category) {
@@ -145,7 +163,7 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     const message = document.getElementById('message').value;
     const errorMessage = document.getElementById('contact-error');
     const telegramBotToken = '7433197315:AAFFMezqvRFGgWtwk5AMkoFrjpnShG3q8Bw'; // Replace with your valid bot token
-    const chatId = '-1002273852179'; // Replace with your valid chat ID
+    const chatId = '-1002081085931'; // Replace with your valid chat ID
     const text = `New Contact Form Submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
 
     errorMessage.style.display = 'none';
