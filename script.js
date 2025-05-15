@@ -1,29 +1,26 @@
 // Loading Animation
 window.onload = function() {
-    // Hide all modals on page load
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.style.display = 'none';
-    });
-    // Show loading animation for 3 seconds
     setTimeout(() => {
         document.getElementById('loading').style.display = 'none';
     }, 3000);
     applyStoredTheme();
 };
 
+// Show Modal with Loading
 function showLoading(modalId) {
-    const loading = document.getElementById('loading');
-    // Special case for shadow-squad (no loading animation needed)
-    if (modalId === 'shadow-squad') {
+    if (!modalId || modalId === 'shadow-squad') {
         document.getElementById(modalId).style.display = 'flex';
         return;
     }
-    // Show loading animation before opening modal
-    loading.style.display = 'flex';
-    setTimeout(() => {
-        loading.style.display = 'none';
-        document.getElementById(modalId).style.display = 'flex';
-    }, 1000);
+    const loading = document.getElementById('loading');
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        loading.style.display = 'flex';
+        setTimeout(() => {
+            loading.style.display = 'none';
+            modal.style.display = 'flex';
+        }, 1000);
+    }
 }
 
 // Theme Toggle
@@ -61,19 +58,8 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.style.display = 'none';
-        console.log(`Closed modal: ${modalId}`); // Debug log
     }
 }
-
-// Close modal when clicking outside content
-document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            console.log(`Closed modal by clicking outside: ${modal.id}`); // Debug log
-        }
-    });
-});
 
 // Creations Filter
 function filterCreations(category) {
@@ -162,8 +148,8 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     const errorMessage = document.getElementById('contact-error');
-    const telegramBotToken = '7433197315:AAFFMezqvRFGgWtwk5AMkoFrjpnShG3q8Bw'; // Replace with your valid bot token
-    const chatId = '-1002081085931'; // Replace with your valid chat ID
+    const telegramBotToken = 'YOUR_TELEGRAM_BOT_TOKEN'; // Replace with your valid bot token
+    const chatId = 'YOUR_CHAT_ID'; // Replace with your valid chat ID
     const text = `New Contact Form Submission:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
 
     errorMessage.style.display = 'none';
