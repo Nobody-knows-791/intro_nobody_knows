@@ -1,19 +1,30 @@
 // Loading Animation
 window.onload = function() {
+    const loading = document.getElementById('loading');
+    const modals = document.querySelectorAll('.modal');
+    
+    // Ensure all modals are hidden on load
+    modals.forEach(modal => modal.style.display = 'none');
+    
+    // Hide loading animation after 3 seconds
     setTimeout(() => {
-        document.getElementById('loading').style.display = 'none';
+        loading.style.display = 'none';
     }, 3000);
+    
     applyStoredTheme();
 };
 
 // Show Modal with Loading
 function showLoading(modalId) {
-    if (!modalId || modalId === 'shadow-squad') {
-        document.getElementById(modalId).style.display = 'flex';
+    // Only proceed if modalId is valid and corresponds to an existing modal
+    const validModalIds = ['about-modal', 'channel-modal', 'group-modal', 'bot-modal', 'bot-list-modal', 'contact-modal'];
+    if (!modalId || !validModalIds.includes(modalId)) {
         return;
     }
+    
     const loading = document.getElementById('loading');
     const modal = document.getElementById(modalId);
+    
     if (modal) {
         loading.style.display = 'flex';
         setTimeout(() => {
