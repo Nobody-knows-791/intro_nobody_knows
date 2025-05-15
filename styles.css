@@ -706,21 +706,29 @@ body.bright-theme .bottom-nav {
     height: 28px;
     border-radius: 10px;
     clip-path: path('M6 0H22C26.4183 0 28 3.58172 28 8V20C28 24.4183 26.4183 28 22 28H6C3.58172 28 0 24.4183 0 20V8C0 3.58172 3.58172 0 6 0Z');
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
     border: 1px solid var(--btn-border);
-    filter: grayscale(100%) brightness(100%);
+    filter: brightness(100%);
 }
 
 body.bright-theme .nav-icon {
-    filter: grayscale(100%) brightness(0%);
+    filter: grayscale(100%) brightness(50%);
 }
 
 .nav-item.active .nav-icon {
-    filter: grayscale(100%) brightness(70%);
+    filter: brightness(80%);
+}
+
+body.bright-theme .nav-item.active .nav-icon {
+    filter: grayscale(100%) brightness(40%);
 }
 
 .nav-item:hover .nav-icon {
-    transform: scale(1.2);
+    filter: brightness(120%);
+}
+
+body.bright-theme .nav-item:hover .nav-icon {
+    filter: grayscale(100%) brightness(60%);
 }
 
 /* Modals */
